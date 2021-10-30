@@ -1,0 +1,11 @@
+
+apple|qua tao|Tao la 1 loai hoa qua co loi cho suc khoe
+orange|qua cam|Cam van la 1 loai hoa qua co loi cho suc khoe
+coconut|qua dua|Dua la 1 loai qua ngon :))
+watermelon|qua dua hau|Dua hau cung tot cho suc khoe, nhung khong tot bang tao va cam
+ball|qua bong;trai banh|Bong, banh la 1 loai do choi ua thich cua tre em tu 10 den 40 tuoi
+noodle|my|Mon an ua thich cua toi, o Viet Nam thuong an cung voi tom
+food|thuc an;thuc pham|Thuc pham noi chung
+duck|con vit|them ghi chu o day nha anh
+chicken|con ga|them ghi chu o day nha anh
+secret|bi mat|bi mat khong the bat mi

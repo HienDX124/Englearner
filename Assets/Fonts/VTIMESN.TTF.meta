@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: cb419b2a7edf6394187a002815c1d2e8
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - VNI-Times
+  fallbackFontReferences: []
+  customCharacters: "a\xE0\xC0\u1EA3\u1EA2\xE1\xC1\xE3\xC3\u1EA1\u1EA0\xE2\u1EA7\u1EA6\u1EA9\u1EA8\u1EA5\u1EA4\u1EAB\u1EAA\u1EAD\u0103\u1EB1\u1EB0\u1EB3\u1EB2\u1EAF\u1EAE\u1EB5\u1EB4\u1EB7\u1EB6"
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
