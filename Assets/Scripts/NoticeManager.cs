@@ -4,11 +4,21 @@ using UnityEngine;
 
 public class NoticeManager : MonoBehaviour
 {
-    public GameObject noticeContainer;
-    public Notice noticePrefabs;
+    private Animator animator;
+    private bool isShowingTodaySumary;
+    public RuntimeAnimatorController[] runtimeAnimatorCtrls;
 
-    public void ShowNotice() {
-        
+    void Start()
+    {
+        animator = GetComponent<Animator>();
+    }
+
+    public void _ToggleTodaySumary()
+    {
+        TodaySumary.instance.SetContent();
+        animator.runtimeAnimatorController = runtimeAnimatorCtrls[0];
+        isShowingTodaySumary = !isShowingTodaySumary;
+        animator.SetBool("show", isShowingTodaySumary);
     }
 
 

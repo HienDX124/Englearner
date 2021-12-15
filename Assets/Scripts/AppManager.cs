@@ -18,7 +18,7 @@ public class AppManager : MonoBehaviour
     private Color32 SlideBarElementColor;
     private Color32 ActiveSlideBarElementColor;
     private Color32 NeededColor;
-    
+
     private Button SlideBarBtn;
     [HideInInspector] public bool isShowingSlideBar;
     [HideInInspector] public bool isShowingCreateTarget;
@@ -29,7 +29,7 @@ public class AppManager : MonoBehaviour
     [HideInInspector] public int newWordsAddToday;
     [HideInInspector] public int wordsLearnedToday;
     protected string lineTodayFile;
-    protected List<string> linesDataPerDay;
+    [HideInInspector] public List<string> linesDataPerDay;
 
     public Animator Animator_Ans;
     public RuntimeAnimatorController[] animatorCtrls_Ans;
@@ -37,93 +37,110 @@ public class AppManager : MonoBehaviour
     void Awake()
     {
         instance = this;
-        
+
         isShowingSlideBar = false;
         isShowingCreateTarget = false;
         checkRequiredField = true;
 
-        SlideBarElementColor = new Color32(218,250,255,255);
-        ActiveSlideBarElementColor = new Color32(93,234,255,255);
-        NeededColor = new Color32(255,211,211,255);
+        SlideBarElementColor = new Color32(218, 250, 255, 255);
+        ActiveSlideBarElementColor = new Color32(93, 234, 255, 255);
+        NeededColor = new Color32(255, 211, 211, 255);
 
         Learning.GetComponent<Image>().color = ActiveSlideBarElementColor;
 
         pathTempPerDayFile = Application.persistentDataPath + "TempPerDayData.txt";
-        if (!File.Exists(pathTempPerDayFile)) {
-            using (var fs = File.Create(pathTempPerDayFile)) {}
-            File.WriteAllText(pathTempPerDayFile,DateTime.Today.ToString() + "|0|0");
-        } else {}
+        if (!File.Exists(pathTempPerDayFile))
+        {
+            using (var fs = File.Create(pathTempPerDayFile)) { }
+            File.WriteAllText(pathTempPerDayFile, DateTime.Today.ToString() + "|0|0");
+        }
+        else { }
         linesDataPerDay = File.ReadAllLines(pathTempPerDayFile).ToList();
         _ResetTempDataPerDay();
-        
+
     }
 
     void Update()
     {
         _Demo();
 
-        if (Input.GetKeyDown(KeyCode.Return)) {
+        if (Input.GetKeyDown(KeyCode.Return))
+        {
             FileIO.FileIO_instance._AnswerSubmitBtn(GameObject.Find("AnswerFeild"));
         }
-        if (Input.GetKeyDown(KeyCode.RightArrow)) {
+        if (Input.GetKeyDown(KeyCode.RightArrow))
+        {
             FileIO.FileIO_instance._NextWordLearningBtn();
         }
 
-        if (Input.GetKeyDown(KeyCode.Tab)) {
+        if (Input.GetKeyDown(KeyCode.Tab))
+        {
             _ToggleSlideBar();
         }
 
     }
 
-    public static AppManager GetInstance() {
+    public static AppManager GetInstance()
+    {
         return instance;
     }
 
-    public void _ToggleSlideBar() {
+    public void _ToggleSlideBar()
+    {
         isShowingSlideBar = !isShowingSlideBar;
         SlideBarAnimator.SetBool("show", isShowingSlideBar);
     }
 
-    public void _ToggleCreateTargetFeild() {
-
+    public void _ToggleCreateTargetFeild()
+    {
         isShowingCreateTarget = !isShowingCreateTarget;
         CreateTargetAnimator.SetBool("show", isShowingCreateTarget);
     }
 
-    public void _CheckEmptyRequiredField(GameObject GOField) {
-        
-        InputField inputField = GOField.GetComponent<InputField>();        
+
+
+
+    public void _CheckEmptyRequiredField(GameObject GOField)
+    {
+
+        InputField inputField = GOField.GetComponent<InputField>();
         string str = inputField.text;
         str = str.Trim();
-        if (str == "" || str == null || str.Equals("")){
-            
+        if (str == "" || str == null || str.Equals(""))
+        {
+
             //  Show effect to UI
             inputField.image.color = NeededColor;
 
             //  Show message to UI this feild is required
             checkRequiredField = false;
         }
-        else {
+        else
+        {
             inputField.image.color = Color.white;
             checkRequiredField = true;
         }
     }
 
-    public void _RemoveNeededColor(InputField inpf) {
-        inpf.image.color = Color.white; 
+    public void _RemoveNeededColor(InputField inpf)
+    {
+        inpf.image.color = Color.white;
     }
 
-    public void _SetNeededColor(InputField inpf) {
-        inpf.image.color = NeededColor; 
+    public void _SetNeededColor(InputField inpf)
+    {
+        inpf.image.color = NeededColor;
 
     }
 
-    public void _HandleActiveColor(GameObject GO) {
+    public void _HandleActiveColor(GameObject GO)
+    {
 
         //  Set color unActive for all SlideBarElements 
         GameObject[] SlideBarElements = GameObject.FindGameObjectsWithTag("SlideBarElement");
-        foreach(var element in SlideBarElements) {
-        
+        foreach (var element in SlideBarElements)
+        {
+
             Image tempImage = element.GetComponent<Image>();
             tempImage.color = SlideBarElementColor;
         }
@@ -133,11 +150,13 @@ public class AppManager : MonoBehaviour
         image.color = ActiveSlideBarElementColor;
     }
 
-    public void _HandleActiveScreen(GameObject GO) {
+    public void _HandleActiveScreen(GameObject GO)
+    {
 
         //  Set unActive for all screens
         GameObject[] AppScreens = GameObject.FindGameObjectsWithTag("AppScreen");
-        foreach (var element in AppScreens) {
+        foreach (var element in AppScreens)
+        {
             element.SetActive(false);
         }
 
@@ -145,8 +164,10 @@ public class AppManager : MonoBehaviour
         GO.SetActive(true);
     }
 
-    public void _Demo() {
-        if (Input.GetKeyDown(KeyCode.I)) {
+    public void _Demo()
+    {
+        if (Input.GetKeyDown(KeyCode.I))
+        {
             // DateTime dt = DateTime.Today;
             // string str = dt.ToString();
             // Debug.Log("__" + str + "__");
@@ -158,63 +179,79 @@ public class AppManager : MonoBehaviour
         }
     }
 
-    public void _ResetTempDataPerDay() {
+    public void _ResetTempDataPerDay()
+    {
         string newDate;
         string newNewWordTD;
         string newWordsLearnTD;
 
-        lineTodayFile = linesDataPerDay[linesDataPerDay.Capacity-1];
+        lineTodayFile = linesDataPerDay[linesDataPerDay.Capacity - 1];
         // __NOTE__: lineTodayFile: [0]: date, [1]: newWordsTD, [2]: wordLearnedTD
         DateTime date;
         string[] lineSplit = lineTodayFile.Split('|');
-        
-        DateTime.TryParse(lineSplit[0],out date);
-        if (date != DateTime.Today.Date) {
+
+        DateTime.TryParse(lineSplit[0], out date);
+        if (date != DateTime.Today.Date)
+        {
             newDate = DateTime.Today.Date.ToString();
             newNewWordTD = "0";
             newWordsLearnTD = "0";
             string newLine = newDate + "|" + newNewWordTD + "|" + newWordsLearnTD;
             linesDataPerDay.Add(newLine);
             File.WriteAllLines(pathTempPerDayFile, linesDataPerDay);
-        } else {
+        }
+        else
+        {
             newWordsAddToday = int.Parse(lineSplit[1]);
             wordsLearnedToday = int.Parse(lineSplit[2]);
         }
     }
 
-    public void _AddNewWordsTD() {
-        newWordsAddToday ++;
-        UpdateTempDataPerDay();
-    }
-
-    public void _LearnWordsTD() {
-        wordsLearnedToday ++;
+    public void _AddNewWordsTD()
+    {
+        newWordsAddToday++;
         UpdateTempDataPerDay();
         UpdateToFirstTarget();
     }
 
-    protected void UpdateTempDataPerDay() {
-        string newLine = DateTime.Today.ToString() + "|" + newWordsAddToday + "|" +  wordsLearnedToday;
-        linesDataPerDay.RemoveAt(linesDataPerDay.Capacity-1);
-        linesDataPerDay.Add(newLine);
-        File.WriteAllLines(pathTempPerDayFile, linesDataPerDay);
+    public void _LearnWordsTD()
+    {
+        wordsLearnedToday++;
+        UpdateTempDataPerDay();
     }
 
-    protected void UpdateToFirstTarget() {
-        if (DateTime.Today == DateTime.Parse(linesDataPerDay[linesDataPerDay.Capacity - 1].Split('|')[0]) ) {
-            string todayData = linesDataPerDay[linesDataPerDay.Capacity - 1];
-            string firstTargetStillActive;
-            var i = 0;
-            foreach(var line in TargetManager.instance.lines) {
-                string[] elementsInline = line.Split('|');
-                i++;
-                bool isActiveTarget = bool.Parse(elementsInline[elementsInline.Length-1]);
-                if (isActiveTarget) {
-                    firstTargetStillActive = line;
-                    string[] elements = firstTargetStillActive.Split('|');
+    protected void UpdateTempDataPerDay()
+    {
+        string newLine = DateTime.Today.ToString() + "|" + newWordsAddToday + "|" + wordsLearnedToday;
+        linesDataPerDay.RemoveAt(linesDataPerDay.Capacity - 1);
+        linesDataPerDay.Add(newLine);
+        File.WriteAllLines(pathTempPerDayFile, linesDataPerDay);
+        TodaySumary.instance.UpdateData();
+    }
+
+    protected void UpdateToFirstTarget()
+    {
+        if (DateTime.Today == DateTime.Parse(linesDataPerDay[linesDataPerDay.Capacity - 1].Split('|')[0]))
+        {
+            // string todayData = linesDataPerDay[linesDataPerDay.Capacity - 1];
+            string firstActiveTarget;
+            for (var i = 0; i < TargetManager.instance.lines.Capacity; i++)
+            {
+                string[] elementsInline = TargetManager.instance.lines[i].Split('|');
+                bool isActiveTarget = bool.Parse(elementsInline[elementsInline.Length - 1]);
+                if (isActiveTarget)
+                {
+                    firstActiveTarget = TargetManager.instance.lines[i];
+                    string[] elements = firstActiveTarget.Split('|');
+                    elements[4] = int.Parse(elements[4]) + 1 + "";
+                    string newLine = string.Join("|", elements);
+                    TargetManager.instance.lines[i] = newLine;
+                    File.WriteAllLines(TargetManager.instance.pathFileTarget, TargetManager.instance.lines);
 
                     break;
-                } else if (i == TargetManager.instance.lines.Capacity - 1 && !isActiveTarget) {
+                }
+                else if (i == TargetManager.instance.lines.Capacity - 1 && !isActiveTarget)
+                {
                     //  Notice to user to create a new target
                     Debug.Log("You have no any target valid now, create a new one!");
                 }

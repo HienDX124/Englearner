@@ -3,6 +3,11 @@ ScriptsOnlyBuild:
     Assembly-CSharp.dll:
     - AppManager
     - FileIO
+    - HandleDropDown
+    - NoticeManager
+    - ScriptTargetGO
+    - TargetManager
+    - TodaySumary
     Unity.2D.Animation.Editor.dll:
     - UnityEditor.U2D.Animation.BoneGizmo
     Unity.2D.IK.Editor.dll:
@@ -24,15 +29,19 @@ ScriptsOnlyBuild:
     - TMPro.EditorUtilities.TMPro_FontAssetCreatorWindow
     Unity.TextMeshPro.dll:
     - TMPro.TMP_ColorGradient
+    - TMPro.TMP_Dropdown
     - TMPro.TMP_FontAsset
     - TMPro.TMP_Settings
     - TMPro.TMP_SpriteAsset
     - TMPro.TMP_StyleSheet
+    - TMPro.TextMeshProUGUI
     UnityEditor.Graphs.dll:
     - UnityEditor.Graphs.AnimationBlendTree.Graph
     - UnityEditor.Graphs.AnimationBlendTree.GraphGUI
+    - UnityEditor.Graphs.AnimationStateMachine.AnyStateNode
     - UnityEditor.Graphs.AnimationStateMachine.Graph
     - UnityEditor.Graphs.AnimationStateMachine.GraphGUI
+    - UnityEditor.Graphs.AnimationStateMachine.StateNode
     - UnityEditor.Graphs.AnimatorControllerTool
     UnityEditor.TestRunner.dll:
     - UnityEditor.TestTools.TestRunner.Api.CallbacksHolder
@@ -46,7 +55,12 @@ ScriptsOnlyBuild:
     - UnityEngine.UI.GraphicRaycaster
     - UnityEngine.UI.Image
     - UnityEngine.UI.InputField
+    - UnityEngine.UI.Mask
+    - UnityEngine.UI.ScrollRect
+    - UnityEngine.UI.Scrollbar
     - UnityEngine.UI.Text
+    - UnityEngine.UI.Toggle
+    - UnityEngine.UI.VerticalLayoutGroup
   sceneClasses:
     Assets/Scenes/2340x1080.unity:
     - Class: 1
@@ -80,29 +94,53 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 2714}
     - Class: 114
+      Script: {instanceID: 2728}
+    - Class: 114
       Script: {instanceID: 2950}
     - Class: 114
-      Script: {instanceID: 3000}
+      Script: {instanceID: 2996}
     - Class: 114
-      Script: {instanceID: 3260}
+      Script: {instanceID: 3002}
     - Class: 114
-      Script: {instanceID: 4340}
+      Script: {instanceID: 3262}
     - Class: 114
-      Script: {instanceID: 4462}
+      Script: {instanceID: 3758}
     - Class: 114
-      Script: {instanceID: 4770}
+      Script: {instanceID: 4190}
     - Class: 114
-      Script: {instanceID: 4962}
+      Script: {instanceID: 4346}
     - Class: 114
-      Script: {instanceID: 5608}
+      Script: {instanceID: 4434}
     - Class: 114
-      Script: {instanceID: 5914}
+      Script: {instanceID: 4472}
     - Class: 114
-      Script: {instanceID: 6262}
+      Script: {instanceID: 4780}
     - Class: 114
-      Script: {instanceID: 6618}
+      Script: {instanceID: 4972}
     - Class: 114
-      Script: {instanceID: 6826}
+      Script: {instanceID: 5456}
+    - Class: 114
+      Script: {instanceID: 5618}
+    - Class: 114
+      Script: {instanceID: 5924}
+    - Class: 114
+      Script: {instanceID: 6272}
+    - Class: 114
+      Script: {instanceID: 6462}
+    - Class: 114
+      Script: {instanceID: 6628}
+    - Class: 114
+      Script: {instanceID: 6838}
+    - Class: 114
+      Script: {instanceID: 6846}
+    - Class: 114
+      Script: {instanceID: 7330}
+    - Class: 114
+      Script: {instanceID: 8072}
+    - Class: 114
+      Script: {instanceID: 8084}
+    - Class: 114
+      Script: {instanceID: 60976}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -346,6 +384,12 @@ ScriptsOnlyBuild:
     className: TMP_SelectionCaret
   - hash:
       serializedVersion: 2
+      Hash: 4186524aca2a58976b6791b5943ab521
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: NoticeManager
+  - hash:
+      serializedVersion: 2
       Hash: 34746f5ad4a8189141ddf65a40069ea1
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.UI
@@ -502,6 +546,12 @@ ScriptsOnlyBuild:
     className: UnityOnControllerColliderHitMessageListener
   - hash:
       serializedVersion: 2
+      Hash: ebf09cff83572ed83a02a7c30ad13c09
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: ScriptTargetGO
+  - hash:
+      serializedVersion: 2
       Hash: 27ec3360f0c0a6803ba71cc3106480b8
     assemblyName: Unity.TextMeshPro.dll
     namespaceName: TMPro
@@ -634,6 +684,12 @@ ScriptsOnlyBuild:
     className: ControlPlayableAsset
   - hash:
       serializedVersion: 2
+      Hash: b666d46ae33e3d93b9976e3265e58448
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: HandleDropDown
+  - hash:
+      serializedVersion: 2
       Hash: ef5c43f921427d03730f6ea4c848f07d
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.UI
@@ -712,7 +768,7 @@ ScriptsOnlyBuild:
     className: ObjectSpin
   - hash:
       serializedVersion: 2
-      Hash: cabdf1d2b7a34cf2a4b167804cdbe49a
+      Hash: b8dc0a859b9e6c86e43f4650af1bf566
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: FileIO
@@ -928,7 +984,7 @@ ScriptsOnlyBuild:
     className: TextMeshProUGUI
   - hash:
       serializedVersion: 2
-      Hash: 7b6663b27accab64425259c9376092eb
+      Hash: b6155b26c200ad4cb92fded3a0c71f9d
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: AppManager
@@ -1168,6 +1224,12 @@ ScriptsOnlyBuild:
     className: ControlTrack
   - hash:
       serializedVersion: 2
+      Hash: 22f999d27e7e37505bfe75b6cefdfd52
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: TargetManager
+  - hash:
+      serializedVersion: 2
       Hash: 040dd48e3a027d5424519a5fa2009df4
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.UI
@@ -1310,6 +1372,12 @@ ScriptsOnlyBuild:
     assemblyName: Unity.VisualScripting.Core.dll
     namespaceName: Unity.VisualScripting
     className: UnityOnSliderValueChangedMessageListener
+  - hash:
+      serializedVersion: 2
+      Hash: 28bec514a8206c927b6d9c3191193456
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: TodaySumary
   platform: 13
   scenePathNames:
   - Assets/Scenes/2340x1080.unity

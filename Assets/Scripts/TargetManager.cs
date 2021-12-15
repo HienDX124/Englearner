@@ -9,7 +9,7 @@ using System;
 
 public class TargetManager : MonoBehaviour
 {
-    
+
     public GameObject ItemTargetContainer;
     public GameObject ItemTargetPrefab;
     public GameObject EmptyGO;
@@ -22,12 +22,15 @@ public class TargetManager : MonoBehaviour
         instance = this;
 
         pathFileTarget = Application.persistentDataPath + "AllTarget.txt";
-        if (!File.Exists(pathFileTarget)) {
-            using (var fs = File.Create(pathFileTarget)) {}
-        } else {}
+        if (!File.Exists(pathFileTarget))
+        {
+            using (var fs = File.Create(pathFileTarget)) { }
+        }
+        else { }
 
         lines = File.ReadAllLines(pathFileTarget).ToList();
         _RenderTarget();
+        _UpdateAllTargetData();
     }
 
     void Update()
@@ -35,113 +38,146 @@ public class TargetManager : MonoBehaviour
 
     }
 
-    public void _CreatNewTarget() {
+    public void _CreatNewTarget()
+    {
         bool[] checkRequireds = new bool[3];
-        
-        Target target = new Target() {};
-        
+
+        Target target = new Target() { };
+
         //  Set target info
         var nameGet = GameObject.Find("InputField_Name_Target").GetComponent<InputField>();
-        if (!nameGet.text.Equals("")) {
+        if (!nameGet.text.Equals(""))
+        {
             target._SetTarName(nameGet.text.Trim());
             checkRequireds[0] = true;
-        } else { 
+        }
+        else
+        {
             checkRequireds[0] = false;
             AppManager.instance._SetNeededColor(nameGet);
-            Debug.Log("Target name mustn't be null!"); 
+            Debug.Log("Target name mustn't be null!");
         }
 
         var targetGet = GameObject.Find("InputField_NumOfWords_Target").GetComponent<InputField>();
-        if (!targetGet.text.Equals("") || !(targetGet.text == null)) {
+        if (!targetGet.text.Equals("") || !(targetGet.text == null))
+        {
             int temp;
-            if (int.TryParse(targetGet.text, out temp)) {
+            if (int.TryParse(targetGet.text, out temp))
+            {
                 target._SetNumOfWords(int.Parse(targetGet.text.Trim()));
                 checkRequireds[1] = true;
             }
-            else { 
+            else
+            {
                 checkRequireds[1] = false;
                 AppManager.instance._SetNeededColor(targetGet);
-                Debug.Log("Target must be a number"); 
+                Debug.Log("Target must be a number");
             }
-        } else { Debug.Log("NumOfWords is needed!"); }
+        }
+        else { Debug.Log("NumOfWords is needed!"); }
 
         var timeLimGet = GameObject.Find("InputField_TimeLim_Target").GetComponent<InputField>();
-        if (!timeLimGet.text.Equals("") || !(timeLimGet.text == null)) {
+        if (!timeLimGet.text.Equals("") || !(timeLimGet.text == null))
+        {
             int temp;
-            if (int.TryParse(timeLimGet.text, out temp)) {
+            if (int.TryParse(timeLimGet.text, out temp))
+            {
                 target._SetTimeLim(int.Parse(timeLimGet.text));
                 checkRequireds[2] = true;
 
-            } else { 
+            }
+            else
+            {
                 checkRequireds[2] = false;
                 AppManager.instance._SetNeededColor(timeLimGet);
-                Debug.Log("Time limit must be a number (days)"); 
+                Debug.Log("Time limit must be a number (days)");
             }
-        } else { Debug.Log("Time limit is needed!"); }
+        }
+        else { Debug.Log("Time limit is needed!"); }
 
-        string reasonGet = GameObject.Find("InputField_Reason_Target").GetComponent<InputField>().text; 
+        string reasonGet = GameObject.Find("InputField_Reason_Target").GetComponent<InputField>().text;
         target._SetReason(reasonGet.Trim());
-        
+
         target.remainingDay = target.timeLim;
 
         target.startDay = System.DateTime.Today;
 
         //  Write the target info to file targetManager
-        if (checkRequireds[0] && checkRequireds[1] && checkRequireds[2]) {
-            string line = target._GetTargetName() + "|" + target._GetNumberOfWords() + "|" + target._GetTimeLim() + "|" + target._GetTargetReason() + "|" + target.currentWordsLearned  + "|" + target.remainingDay + "|" + target.startDay + "|" + target.isActive;
-            if (!_CheckTarNameExist(line,lines)) {
+        if (checkRequireds[0] && checkRequireds[1] && checkRequireds[2])
+        {
+            string line = target._GetTargetName() + "|" + target._GetNumberOfWords() + "|" + target._GetTimeLim() + "|" + target._GetTargetReason() + "|" + target.currentWordsLearned + "|" + target.remainingDay + "|" + target.startDay + "|" + target.isActive;
+            if (!_CheckTarNameExist(line, lines))
+            {
                 _WriteTarInfoToFile(line);
                 _ResetCreateField();
                 AppManager.instance._ToggleCreateTargetFeild();
 
                 //  Destroy all item_terget
-                foreach (Transform child in ItemTargetContainer.transform) {
+                foreach (Transform child in ItemTargetContainer.transform)
+                {
                     GameObject.Destroy(child.gameObject);
                 }
                 RectTransform rectTransform = ItemTargetContainer.GetComponent<RectTransform>();
-                rectTransform.sizeDelta = new Vector2(rectTransform.sizeDelta.x,0);
+                rectTransform.sizeDelta = new Vector2(rectTransform.sizeDelta.x, 0);
 
                 //  Render all target again
                 _RenderTarget();
 
-            } else {
+            }
+            else
+            {
                 AppManager.instance._SetNeededColor(nameGet);
                 Debug.Log("Target name has existed!");
             }
 
         }
-        else {
+        else
+        {
             Debug.Log("Create failed!");
         }
     }
 
-    public bool _CheckTarNameExist(string str, List<string> lines) {
+    public bool _CheckTarNameExist(string str, List<string> lines)
+    {
         string name = str.Split('|')[0];
-        
-        foreach(var line in lines) {
+
+        foreach (var line in lines)
+        {
             string[] element = line.Split('|');
-            if (element[0] == name) {
+            if (element[0] == name)
+            {
                 return true;
             }
         }
         return false;
     }
 
-    public void _WriteTarInfoToFile(string line) {
+    public void _WriteTarInfoToFile(string line)
+    {
         lines.Add(line);
         File.WriteAllLines(pathFileTarget, lines);
     }
 
-    public void _ResetCreateField() {
+    public void _ResetCreateField()
+    {
         GameObject.Find("InputField_Name_Target").GetComponent<InputField>().text = "";
         GameObject.Find("InputField_NumOfWords_Target").GetComponent<InputField>().text = "";
         GameObject.Find("InputField_TimeLim_Target").GetComponent<InputField>().text = "";
         GameObject.Find("InputField_Reason_Target").GetComponent<InputField>().text = "";
-        
+
     }
 
-    public void _RenderTarget() {
-        for (int i = 0; i < lines.Capacity; i++) {
+    public void _RenderTarget()
+    {
+
+        for (int i = 0; i < ItemTargetContainer.transform.childCount; i++)
+        {
+            Destroy(ItemTargetContainer.transform.GetChild(i).gameObject);
+            ItemTargetContainer.GetComponent<RectTransform>().sizeDelta = Vector2.zero;
+        }
+
+        for (int i = 0; i < lines.Capacity; i++)
+        {
             string[] parts = lines[i].Split('|');
 
             //  Instantiate Target_GO
@@ -151,7 +187,7 @@ public class TargetManager : MonoBehaviour
             //  Change show field height
             RectTransform rectTransform = ItemTargetContainer.GetComponent<RectTransform>();
             rectTransform.sizeDelta = new Vector2(rectTransform.sizeDelta.x, rectTransform.sizeDelta.y + 210);
-            rectTransform.position = new Vector3(rectTransform.position.x, rectTransform.position.y-105, rectTransform.position.z);
+            rectTransform.position = new Vector3(rectTransform.position.x, rectTransform.position.y - 105, rectTransform.position.z);
 
             //  Handle target data
             ScriptTargetGO script = temp.GetComponent<ScriptTargetGO>();
@@ -164,25 +200,54 @@ public class TargetManager : MonoBehaviour
             script.text_remaining_time.text = tempRemainingDay.ToString();
 
             Vector3 tempPosProcess = script.image_process.GetComponent<RectTransform>().localScale;
-            script.image_process.GetComponent<RectTransform>().localScale = new Vector3(float.Parse(parts[4]) / float.Parse(parts[1]) , tempPosProcess.y, tempPosProcess.z);
+            script.image_process.GetComponent<RectTransform>().localScale = new Vector3(float.Parse(parts[4]) / float.Parse(parts[1]), tempPosProcess.y, tempPosProcess.z);
 
             Vector3 tempPosRemainingTime = script.image_remaining_time.GetComponent<RectTransform>().localScale;
             script.image_remaining_time.GetComponent<RectTransform>().localScale = new Vector3(tempRemainingDay / float.Parse(parts[2]), tempPosRemainingTime.y, tempPosRemainingTime.z);
         }
     }
 
-    public void _UpdateAllTargetData() {
+    public void _UpdateAllTargetData()
+    {
+        //  Usage:
         //  Write file what change in each target
+        //  Check target is valid or out of date
+        int TodayDOY = DateTime.Today.DayOfYear;
+        for (var i = 0; i < lines.Capacity; i++)
+        {
+            string[] dataLine = lines[i].Split('|');
+            int targetStartDOY = DateTime.Parse(dataLine[dataLine.Length - 2]).DayOfYear;
+            int timeLimOfTarget = int.Parse(dataLine[2]);
+            int startTargetToCurrentDay = TodayDOY - targetStartDOY;
+
+            if (timeLimOfTarget - startTargetToCurrentDay <= 0)
+            {
+                //  Target out date (invalid)
+                dataLine[dataLine.Length - 1] = "false";
+            }
+            else
+            {
+                //  Target is valid
+                dataLine[dataLine.Length - 1] = "true";
+
+            }
+            string newLine = string.Join("|", dataLine);
+            lines[i] = newLine;
+        }
+        File.WriteAllLines(pathFileTarget, lines);
 
     }
 
-    public void UpdateDataActiveTarget(string tarName) {
-        foreach (var line in lines) {
+    public void UpdateDataActiveTarget(string tarName)
+    {
+        foreach (var line in lines)
+        {
             string[] str = line.Split('|');
-            if (str[0] == tarName) {
-                
+            if (str[0] == tarName)
+            {
+
             }
-        } 
+        }
 
     }
 
